@@ -1,13 +1,13 @@
 SRCS=$(wildcard *.c)
 OUTS=$(wildcard *.o)
 
-all: compile output run
+all: compile output 
 
 compile: $(SRCS)
 	gcc -c $(SRCS)
 
 output: $(OUTS)
-	gcc $(OUTS) -o output
+	gcc -lncurses $(OUTS) -o output
 
 run: 
 	./output
