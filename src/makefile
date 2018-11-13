@@ -7,7 +7,6 @@ compile: $(SRCS)
 	gcc -c $(SRCS)
 
 output: $(OUTS)
-	cd ../obj
 	gcc $(OUTS) -o output
 
 run: 
