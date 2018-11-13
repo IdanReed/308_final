@@ -4,6 +4,5 @@
 int main()
 {
    printf("asdf\n");
-   something(1);
    return 0;
 }
