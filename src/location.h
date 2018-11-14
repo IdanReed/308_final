@@ -4,6 +4,7 @@
 typedef struct Location{
   int x;
   int y;
+  int w;
 } Location;
 
 #endif

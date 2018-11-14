@@ -1,13 +1,15 @@
 SRCS=$(wildcard *.c)
-OUTS=$(wildcard *.o)
 
-all: compile output 
+OUTS=$(wildcard *.o)
+OUTS_OBJ=$(wildcard ../obj/*.o)
+
+all: compile make_output 
 
 compile: $(SRCS)
-	gcc -c $(SRCS)
+	gcc -c $(SRCS) && mv *.o ../obj/
 
-output: $(OUTS)
-	gcc -lncurses $(OUTS) -o output
+make_output: $(OUTS_OBJ)
+	(cd ../obj && gcc -lncurses *.o -o output && mv output ../src)
 
 run: 
 	./output
