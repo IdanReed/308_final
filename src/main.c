@@ -2,36 +2,51 @@
 #include <ncurses.h>
 #include <unistd.h>
 
-#include "screen.h"
+#include "display.h"
 
-#define DELAY 30000
+/* Everything is y,x because thats how ncurses functions are */
 
 int main()
 {
-    Screen s;
-    //WINDOW * win = newwin(10, 10, y0, x0);
-    initscr();
-    noecho();
-    curs_set(FALSE);
+    Display * d = Start_display();
+    
+    Update(d);
+    
+    wborder(stdscr, '.', '.', '.', '.', '.', '.', '.', '.');
+    refresh();
 
-    WINDOW * w = subwin(stdscr,5, 5,5,5);
-
-    int max_y = 0, max_x = 0;
-    getmaxyx(stdscr, max_y, max_x);
-
-    for(int x = 0; x < max_y; x++){
-        for(int y = 0; y < SCREEN_SIZE; y++){
-            mvwprintw(stdscr, y, x, "*");
-            refresh();
-        }
-    }
+    while(1);
     
     /*
-    fill_screen(s);
-    Init();
-    Display_map(s);
-    sleep(10000);
-    endwin();
-    */
+    while(1){
 
+        char c = getch();
+        switch(c){
+            case 27:
+                endwin();
+                return 0;
+            case 'a':
+                x--;
+                break;
+            case 'd':
+                x++;
+                break;
+            case 'w':
+                y--;
+                break;
+            case 's':
+                y++;
+                break;
+            default:
+                break;
+        }
+        //clear();
+        mvprintw(y, x, "@");        
+        refresh();
+       
+    }
+    */
 }
+
+
+

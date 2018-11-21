@@ -15,7 +15,7 @@ run:
 	./output
 
 clean:
-	rm *.o output
+	(rm output && cd ../obj && rm *.o)
 
 %.o: %.c
 	gcc -c $<
