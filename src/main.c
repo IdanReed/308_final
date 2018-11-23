@@ -3,11 +3,21 @@
 #include <unistd.h>
 
 #include "display.h"
+#include "game.h"
+#include "types.h"
 
 /* Everything is y,x because thats how ncurses functions are */
 
 int main()
 {
+    Game * g = Start_game(Start_display());
+
+    while(Update_game(g));    
+    
+}
+
+
+/*
     Display * d = Start_display();
     
     Update(d);
@@ -16,8 +26,8 @@ int main()
     refresh();
 
     while(1);
+
     
-    /*
     while(1){
 
         char c = getch();
@@ -46,7 +56,5 @@ int main()
        
     }
     */
-}
-
 
 
