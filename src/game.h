@@ -10,6 +10,9 @@ typedef struct{
     Display * d;
 } Game;
 
+
+void Fill_display(Game *);
+
 int Update_game(Game *);
 
 void Load_ents(Game *, char *);

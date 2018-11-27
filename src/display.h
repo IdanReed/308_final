@@ -3,8 +3,8 @@
 #ifndef display_h
 #define display_h
 
-#define MAP_WIDTH       25
-#define MAP_HEIGHT      25
+#define MAP_WIDTH       50
+#define MAP_HEIGHT      50
 
 #define PLAYER_CHARC    '@'
 
@@ -18,8 +18,8 @@ typedef struct{
     char screen_chars [MAP_HEIGHT][MAP_WIDTH];
     State screen_state;
 
-    int player_x;
     int player_y;
+    int player_x;
 
     WINDOW * map;
     WINDOW * inv;

@@ -6,14 +6,14 @@
 #include "game.h"
 #include "types.h"
 
-/* Everything is y,x because thats how ncurses functions are */
+/* Everything is y,x because thats how ncurses functions are! */
 
 int main()
 {
     Game * g = Start_game(Start_display());
 
     while(Update_game(g));    
-    
+
 }
 
 
