@@ -8,26 +8,25 @@
 
 /* Everything is y,x because thats how ncurses functions are! */
 
-int main()
-{
-    Game * g = Start_game(Start_display());
+int main(){
+  Game * g = Start_game(Start_display());
 
-    while(Update_game(g));    
+  while(Update_game(g));
 
 }
 
 
 /*
     Display * d = Start_display();
-    
+
     Update(d);
-    
+
     wborder(stdscr, '.', '.', '.', '.', '.', '.', '.', '.');
     refresh();
 
     while(1);
 
-    
+
     while(1){
 
         char c = getch();
@@ -51,10 +50,8 @@ int main()
                 break;
         }
         //clear();
-        mvprintw(y, x, "@");        
+        mvprintw(y, x, "@");
         refresh();
-       
+
     }
     */
-
-
