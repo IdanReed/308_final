@@ -6,46 +6,17 @@
 #include "types.h"
 #include "game.h"
 #include "input.h"
+#include "map_loader.h"
 
-void test_act(Game * g, Entity * e){
-  e->display_char++;
-}
-
-void test_fill_ents(Game * g){
-  for(int y = 0; y < ENT_HEIGHT; y++){
-    for(int x = 0; x < ENT_WIDTH; x++){
-      Entity e;
-      e.act = NULL;
-
-      if(!(x%5)){
-        e.act = &test_act;
-        e.display_char = '|';
-      }else if(y%2){
-        e.display_char = 'a';
-      }else{
-
-        e.display_char = 'b';
-      }
-
-      g->entity_board[y][x] = e;
-    }
-  }
-}
-
-void Step_ents(Game * g){
-  for(int y = 0; y < ENT_HEIGHT; y++){
-    for(int x = 0; x < ENT_WIDTH; x++){
-      Entity * e = &(g->entity_board[y][x]);
-      if(e->act){
-        (*e->act)(g, e);
-      }
-    }
-  }
+void Act_Collision(Game * g){
+  Entity * e = &(g->entity_board[g->player_y][g->player_x]);
+  e->collision_action(g, e);
 }
 
 int Update_game(Game * g){
   Process_input(g);
-  Step_ents(g);
+  //Step_ents(g);
+  Act_Collision(g);
   Fill_display(g);
   Update_display(g->display);
   refresh();
@@ -57,7 +28,6 @@ Game * Start_game(Display * d){
   g->display = d;
   g->player_x = 500;
   g->player_y = 500;
-  test_fill_ents(g);
   return g;
 }
 

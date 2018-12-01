@@ -1,7 +1,7 @@
-#include <ncurses.h>
+#ifndef __DISPLAY__
+#define __DISPLAY__
 
-#ifndef display_h
-#define display_h
+#include <ncurses.h>
 
 #define MAP_WIDTH       100
 #define MAP_HEIGHT      50
@@ -17,7 +17,7 @@ typedef enum {
 typedef struct{
   char screen_chars [MAP_HEIGHT][MAP_WIDTH];
   State screen_state;
-  
+
   WINDOW * map;
   WINDOW * inv;
   WINDOW * combat;

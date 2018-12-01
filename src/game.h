@@ -1,3 +1,6 @@
+#ifndef __GAME__
+#define __GAME__
+
 #include "display.h"
 
 #define ENT_WIDTH       1000
@@ -8,8 +11,7 @@ typedef struct Entity Entity;
 
 typedef struct Entity{
   char display_char;
-  void (* act)(Game *, Entity *);
-  
+  void (* collision_action)(Game *, Entity *);
 } Entity;
 
 typedef struct Game{
@@ -31,4 +33,7 @@ Game * Start_game(Display *);
 
 
 /* DEBUGGING PROTOTYPES BELOW */
-void test_fill_ents(Game *);
+
+
+
+#endif
