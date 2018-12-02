@@ -16,7 +16,6 @@ static void set_ent_gens(){
   for(int i = 0; i < CHAR_COUNT; i++){
     ent_gen_map[i] = 0;
   }
-
   ent_gen_map['H'] = &init_house;
 }
 

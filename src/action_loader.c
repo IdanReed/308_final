@@ -12,12 +12,13 @@ void test_act(Game * g, Entity * e, char c){
 void ca_house(Game * g, Entity * e, char c){
   Ent_house * house = (Ent_house *) e->sub_data;
   g->display->menu_items[0] = house->entry_message;
-
   e->display_char++;
-  e->collision_action = 0;
-  g->game_state = moving;
+
+  //e->collision_action = 0;
+  //g->game_state = moving;
 
 }
+////////////////////////////////////////////////////////////////
 
 void Start_action_loader(){
   for(int i = 0; i < CHAR_COUNT; i++){

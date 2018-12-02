@@ -21,13 +21,21 @@ typedef enum {
   locked
 } State;
 
+typedef struct Player{
+  int hp;
+  int water;
+  int food;
+} Player;
+
 typedef struct Game{
   Display * display;
 
   Entity entity_board[ENT_HEIGHT][ENT_WIDTH];
+
   int player_x;
   int player_y;
 
+  Player player;
   State game_state;
 } Game;
 
