@@ -14,8 +14,8 @@
 #define PLAYER_CHAR    '@'
 
 typedef struct{
-  char  screen_chars [MAP_HEIGHT][MAP_WIDTH];
-
+  char screen_chars [MAP_HEIGHT][MAP_WIDTH];
+  char * menu_title;
   char * menu_items[MAX_MENU_OPS];
 
   WINDOW * map;

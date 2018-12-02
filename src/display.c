@@ -28,14 +28,6 @@ void display_map(Display * d){
 
 }
 
-void write_menu(WINDOW * w, int option_count, char * options[]){
-  wborder(w, '.', '.', '.', '.', '.', '.', '.', '.');
-
-  int x_max;
-  int y_max;
-
-  getmaxyx(w, y_max, x_max);
-}
 
 void display_menu(Display * d){
   wborder(d->menu, '.', '.', '.', '.', '.', '.', '.', '.');
@@ -87,7 +79,6 @@ Display * Start_display(){
   Display * d = malloc(sizeof(Display));
 
   clear_menu(d);
-  d->menu_items[3] = "asdf";
   d->headings = subwin(stdscr, HEADING_HEIGHT, getmaxx(stdscr), 0, 0);
 
   /* |MAP|MENU|STATUS| */

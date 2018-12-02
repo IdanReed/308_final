@@ -12,12 +12,13 @@ typedef struct Entity Entity;
 typedef struct Entity{
   char display_char;
   void (* collision_action)(Game *, Entity *, char);
+
+  void * sub_data;
 } Entity;
 
 typedef enum {
   moving,
-  fighting,
-  message,
+  locked
 } State;
 
 typedef struct Game{

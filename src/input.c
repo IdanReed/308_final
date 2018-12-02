@@ -3,8 +3,6 @@
 #include "game.h"
 #include "types.h"
 
-
-
 void Direct_input(Game * g){
   char c = getch();
 
@@ -17,9 +15,11 @@ void Direct_input(Game * g){
     case moving:
       Move(g, c);
       break;
-    case fighting:
-      //g->entity_board[player_y][player_x].collision_action()
-
+    case locked:{
+        Entity * e = &(g->entity_board[g->player_y][g->player_x]);
+        e->collision_action(g, e, c);
+        //collision_action()
+      }
       break;
     default:
 

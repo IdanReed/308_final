@@ -31,8 +31,8 @@ void Act_Collision(Game * g){
   Entity * e = &(g->entity_board[g->player_y][g->player_x]);
   if(e->collision_action){
     //e->collision_action(g, e);
-    g->game_state = fighting;
-    
+    g->game_state = locked;
+
   }
 }
 
