@@ -36,8 +36,9 @@ void Generate_map(){
       }else if(i > 2){
         c = 'C';
       }else{
-        c = 'A';
+        c = 'H';
       }
+
       fputc(c, map_fp);
 
     }

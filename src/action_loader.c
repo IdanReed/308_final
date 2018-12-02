@@ -1,13 +1,26 @@
 #include "game.h"
 
-void test_act(Game * g, Entity * e){
+#define CHAR_COUNT 128
+
+void (* action_map [CHAR_COUNT])(Game *, Entity *, char);
+
+void test_act(Game * g, Entity * e, char c){
   e->display_char++;
 }
 
-void Map_action(Entity * e, char c){
-  if(c != ' '){
-    e->collision_action = &test_act;
-  }else{
-    e->collision_action = 0;
+void ca_house(Game * g, Entity * e, char c){
+  //write_menu();
+}
+
+void Start_action_loader(){
+  for(int i = 0; i < CHAR_COUNT; i++){
+    action_map[i] = 0;
   }
+
+  action_map['A'] = &test_act;
+  action_map['H'] = &ca_house;
+}
+
+void Map_action(Entity * e, char c){
+  e->collision_action = action_map[c];
 }

@@ -11,17 +11,28 @@ typedef struct Entity Entity;
 
 typedef struct Entity{
   char display_char;
-  void (* collision_action)(Game *, Entity *);
+  void (* collision_action)(Game *, Entity *, char);
 } Entity;
 
+typedef enum {
+  moving,
+  fighting,
+  message,
+} State;
+
 typedef struct Game{
+  Display * display;
+
   Entity entity_board[ENT_HEIGHT][ENT_WIDTH];
   int player_x;
   int player_y;
-  Display * display;
+
+  State game_state;
 } Game;
 
-void Fill_display(Game *);
+void Fill_map(Game *);
+
+void Move(Game *, char);
 
 int Update_game(Game *);
 

@@ -3,6 +3,6 @@
 
 #include "display.h"
 
-void Process_input(Game *);
+void Direct_input(Game *);
 
 #endif

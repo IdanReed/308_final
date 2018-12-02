@@ -3,27 +3,28 @@
 #include "game.h"
 #include "types.h"
 
-void Process_input(Game * g){
+
+
+void Direct_input(Game * g){
   char c = getch();
-  if(c != ERR){
-    switch(c){
-        case 27:
-            endwin();
-            exit(0);
-        case 'a':
-            g->player_x--;
-            break;
-        case 'd':
-            g->player_x++;
-            break;
-        case 'w':
-            g->player_y--;
-            break;
-        case 's':
-            g->player_y++;
-            break;
-        default:
-            break;
-    }
+
+  if((c > 'z' || c < 'a') && !(c == ERR)){
+    endwin();
+    exit(0);
   }
+
+  switch(g->game_state){
+    case moving:
+      Move(g, c);
+      break;
+    case fighting:
+      //g->entity_board[player_y][player_x].collision_action()
+
+      break;
+    default:
+
+      break;
+  }
+  flushinp();
+
 }

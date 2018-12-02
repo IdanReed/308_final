@@ -1,63 +1,99 @@
 #include <ncurses.h>
 #include <stdlib.h>
 #include "display.h"
+#include <string.h>
+#include <string.h>
 
-/* Only handle displaying to terminal, avoid game logic */
+/* Try to only handle displaying to terminal, avoid game logic here */
 
-void Display_inventory(Display * d){
+#define HEADING_HEIGHT 5
+
+void display_inventory(Display * d){
+  //wborder(d->combat, '.', '.', '.', '.', '.', '.', '.', '.');
 
 }
 
-void Display_map(Display * d){
-    wborder(d->map, '.', '.', '.', '.', '.', '.', '.', '.');
+void display_map(Display * d){
+  wborder(d->map, '.', '.', '.', '.', '.', '.', '.', '.');
 
-    for(int y = 1; y < MAP_HEIGHT-1; y++){
-        for(int x = 1; x < MAP_WIDTH-1; x++){
-            wmove(d->map, y, x);
-            waddch(d->map, d->screen_chars[y][x]);
-        }
+  for(int y = 1; y < MAP_HEIGHT-1; y++){
+    for(int x = 1; x < MAP_WIDTH-1; x++){
+      wmove(d->map, y, x);
+      waddch(d->map, d->screen_chars[y][x]);
     }
+  }
 
-    wmove(d->map, (MAP_HEIGHT/2), (MAP_WIDTH/2));
-    waddch(d->map, PLAYER_CHAR);
+  wmove(d->map, (MAP_HEIGHT/2), (MAP_WIDTH/2));
+  waddch(d->map, PLAYER_CHAR);
 
+}
+
+void write_menu(WINDOW * w, int option_count, char * options[]){
+  wborder(w, '.', '.', '.', '.', '.', '.', '.', '.');
+
+  int x_max;
+  int y_max;
+
+  getmaxyx(w, y_max, x_max);
+}
+
+void display_menu(Display * d){
+  wborder(d->menu, '.', '.', '.', '.', '.', '.', '.', '.');
+  for(int i = 0; i < MAX_MENU_OPS; i++){
+
+    mvwaddstr(d->menu,(i * 3) + 1 , 5, d->menu_items[i]);
+
+    if(strncmp( "", d->menu_items[i], 100)){
+      mvwaddch(d->menu, (i * 3) + 1, 2, (i + 'A'));
+      mvwaddch(d->menu, (i * 3) + 1, 3, ')');
+    }
+  }
+}
+
+void display_headings(Display * d ){
+  wborder(d->headings, '.', '.', '.', '.', '.', '.', '.', '.');
+}
+
+void display_status(Display * d){
+  wborder(d->status, '.', '.', '.', '.', '.', '.', '.', '.');
+
+}
+
+void clear_menu(Display * d){
+  for(int i = 0; i < MAX_MENU_OPS; i++){
+    d->menu_items[i] = "";
+  }
 }
 
 void Update_display(Display * d){
-    erase();
+  //clear();
+  erase();
 
-    switch(d->screen_state){
-        case inv:
-            break;
-        case combat:
-            break;
-        case map:
+  display_map(d);
+  display_headings(d);
+  display_menu(d);
+  display_status(d);
 
-            Display_map(d);
-            break;
-        default:
-            break;
-    }
-    refresh();
+  refresh();
 }
 
 Display * Start_display(){
-    initscr();
-    noecho();
-    nodelay(stdscr, TRUE);
-    curs_set(FALSE);
-    clear();
+  initscr();
+  noecho();
+  nodelay(stdscr, TRUE);
+  curs_set(FALSE);
+  clear();
 
-    Display * d = malloc(sizeof(Display));
+  Display * d = malloc(sizeof(Display));
 
-    d->map = subwin(stdscr, MAP_HEIGHT, MAP_WIDTH,
-      (getmaxy(stdscr) - MAP_HEIGHT) / 2,
-      (getmaxx(stdscr) - MAP_WIDTH) / 2);
+  clear_menu(d);
+  d->menu_items[3] = "asdf";
+  d->headings = subwin(stdscr, HEADING_HEIGHT, getmaxx(stdscr), 0, 0);
 
-    d->inv = subwin(stdscr, MAP_HEIGHT, MAP_WIDTH, 20, 20);
-    d->combat = subwin(stdscr, MAP_HEIGHT, MAP_WIDTH, 20, 20);
+  /* |MAP|MENU|STATUS| */
+  d->map =        subwin(stdscr, SUB_WIN_HEIGHT, SUB_WIN_WIDTH, HEADING_HEIGHT, 0);
+  d->menu =       subwin(stdscr, SUB_WIN_HEIGHT, getmaxx(stdscr) - (SUB_WIN_WIDTH*2), HEADING_HEIGHT, SUB_WIN_WIDTH);
+  d->status =     subwin(stdscr, SUB_WIN_HEIGHT, SUB_WIN_WIDTH, HEADING_HEIGHT, getmaxx(stdscr) - SUB_WIN_WIDTH);
 
-    d->screen_state = map;
-
-    return d;
+  return d;
 }
