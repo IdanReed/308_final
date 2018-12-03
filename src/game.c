@@ -11,7 +11,18 @@
 
 /*---Helper/standard action handlers---------------------------*/
 void Add_player_stats(Display * d, Player * p){
-  
+  for(int i = 0; i < MAX_STATUS_CNT; i++){
+    Stat s = p->stats[i];
+    char * buff = malloc(sizeof(char)*50);
+    strcpy(buff, s.name);
+
+
+    char num[10];
+    sprintf(num, "%d", s.value);
+
+    strcpy(&buff[strlen(s.name)], num);
+    d->status_items[i] = buff;
+  }
 }
 
 static void collision_over(Game * g, Entity * e){
@@ -71,11 +82,16 @@ int Update_game(Game * g){
 
 Player * init_player(){
   Player * p = malloc(sizeof(Player));
+
+  for(int i = 0; i < MAX_STATUS_CNT; i++){
+    p->stats[i].name = "STAT: ";
+  }
   return p;
 }
 
 Game * Start_game(Display * d){
   Game * g = malloc(sizeof(Game));
+  g->player = init_player();
 
   g->game_state = moving;
   g->display = d;
