@@ -14,6 +14,6 @@ char *  messages[]= {
 "You find a school. Zombie children attack you",
  
 
-}
+};
 
 #endif
