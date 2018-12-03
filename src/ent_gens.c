@@ -13,7 +13,7 @@ void init_house(Entity * e){
   clear_options(e->options);
   e->options[0] = "attack";
   
-  e->collision_message = messages[rand()%10];
+  e->collision_message = house_messages[rand()%10];
 
   Ent_house * house = malloc(sizeof(Ent_house));
   e->sub_data = (void *) house;
