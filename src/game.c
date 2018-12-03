@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <string.h>
 
 #include "display.h"
 #include "types.h"
@@ -8,7 +9,21 @@
 #include "input.h"
 #include "map_loader.h"
 
+/*---Helper/standard action handlers---------------------------*/
+void Add_player_stats(Display * d, Player * p){
+  
+}
+
+static void collision_over(Game * g, Entity * e){
+  g->game_state = moving;
+  e->collision_action = 0;
+  Clear_collision(g->display);
+}
+
+/*---Standard game actions-------------------------------------*/
 void Move(Game * g, char c){
+  Add_player_stats(g->display, g->player);
+
   switch(c){
       case 'a':
           g->player_x--;
@@ -30,12 +45,11 @@ void Move(Game * g, char c){
 void Act_Collision(Game * g){
   Entity * e = &(g->entity_board[g->player_y][g->player_x]);
   if(e->collision_action){
-    //e->collision_action(g, e);
     g->game_state = locked;
-
   }
 }
 
+/* Kind of werid to have this here, but it needs entity and I don't want that in display */
 void Fill_map(Game * g){
   for(int y = 0; y < MAP_HEIGHT - 1; y++){
     for(int x = 0; x < MAP_WIDTH - 1; x++){
@@ -46,12 +60,18 @@ void Fill_map(Game * g){
 }
 
 int Update_game(Game * g){
-  Direct_input(g);
   Act_Collision(g);
+  Direct_input(g);
+
   Fill_map(g);
   Update_display(g->display);
   refresh();
   return 1;
+}
+
+Player * init_player(){
+  Player * p = malloc(sizeof(Player));
+  return p;
 }
 
 Game * Start_game(Display * d){

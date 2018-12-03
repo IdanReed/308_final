@@ -5,6 +5,7 @@
 
 #define ENT_WIDTH       1000
 #define ENT_HEIGHT      1000
+#define MAX_MENU_OPS      10
 
 typedef struct Game Game;
 typedef struct Entity Entity;
@@ -14,6 +15,8 @@ typedef struct Entity{
   void (* collision_action)(Game *, Entity *, char);
 
   void * sub_data;
+  char * options [MAX_MENU_OPS];
+  char * collision_message;
 } Entity;
 
 typedef enum {
@@ -21,10 +24,21 @@ typedef enum {
   locked
 } State;
 
+
+typedef struct {
+  int value;
+  char * name;
+} Stat;
+
+typedef enum {
+  health,
+  atk,
+  food,
+  water,
+} Stat_list;
+
 typedef struct Player{
-  int hp;
-  int water;
-  int food;
+  Stat stats[MAX_STATUS_CNT];
 } Player;
 
 typedef struct Game{
@@ -35,7 +49,7 @@ typedef struct Game{
   int player_x;
   int player_y;
 
-  Player player;
+  Player * player;
   State game_state;
 } Game;
 
@@ -51,9 +65,6 @@ void Gen_ents(Game *, char *);
 
 Game * Start_game(Display *);
 
-
-/* DEBUGGING PROTOTYPES BELOW */
-
-
+void Add_player_stats(Display *, Player *);
 
 #endif
