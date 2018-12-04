@@ -1,5 +1,5 @@
 #include <stdlib.h>
-
+#include "col_msgs.h"
 #include "game.h"
 #include "ent_subtypes.h"
 #include "col_msgs.h"
