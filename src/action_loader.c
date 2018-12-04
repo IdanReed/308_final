@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "game.h"
 #include "display.h"
@@ -11,10 +12,28 @@
 static void (* action_map [CHAR_COUNT])(Game *, Entity *, char);
 
 /*---Helper/standard action handlers---------------------------*/
+static void standard_eat(Game * g){
+  int healing_amt = rand() % 20;
+  g->player->stats[food].value--;
+  g->player->stats[health].value += healing_amt;
 
-static void standard_atk(int atk, int * hp){
+  char * str = malloc(sizeof(char) * 200);
+  snprintf(str, sizeof(char) * 200, "%s%d", "You eat: +", healing_amt);
+  Add_to_log(g->display, str);
+}
+static void standard_atk(Game * g, int atk, int * hp, bool is_player){
   int dmg_done = rand() % atk;
   *hp -= dmg_done;
+
+  char * str = malloc(sizeof(char) * 200);
+
+  if(is_player){
+    snprintf(str, sizeof(char) * 200, "%s%d", "You attack dealing: ", dmg_done);
+  }else{
+    snprintf(str, sizeof(char) * 200, "%s%d", "Occupant attacks dealing:", dmg_done);
+  }
+
+  Add_to_log(g->display, str);
 }
 
 
@@ -36,12 +55,40 @@ void ca_house(Game * g, Entity * e, char c){
   Ent_house * house = (Ent_house *) e->sub_data;
 
   if(turn == ent_turn){
-    //standard_atk(house->atk, &g->player->hp);
+    sleep(1);
+    standard_atk(g, house->atk, &g->player->stats[health].value, 0);
+    turn = player_turn;
+  }else{
+    switch(c){
+      case 'a':{
+        standard_atk(g, g->player->stats[atk].value, &house->hp, 1);
+        turn = ent_turn;
+        break;
+      }
+      case 'b':{
+        standard_eat(g);
+        turn = ent_turn;
+        break;
+      }
+
+      case ERR:
+        break;
+      default:
+        turn = ent_turn;
+        break;
+    }
+  }
+
+
+  if(house->hp <= 0){
+    Add_to_log(g->display, "Victory");
+    Collision_over(g, e);
+  }else if (g->player->stats[health].value <= 0){
+    endwin();
+    exit(0);
   }
 
   e->display_char = 'X';
-
-  //collision_over(g, e);
 }
 
 

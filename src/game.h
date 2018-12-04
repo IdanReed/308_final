@@ -54,17 +54,12 @@ typedef struct Game{
 } Game;
 
 void Fill_map(Game *);
-
 void Move(Game *, char);
-
 int Update_game(Game *);
-
 void Load_ents(Game *, char *);
-
 void Gen_ents(Game *, char *);
-
 Game * Start_game(Display *);
-
 void Add_player_stats(Display *, Player *);
+void Collision_over(Game *, Entity *);
 
 #endif

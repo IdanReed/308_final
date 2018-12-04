@@ -16,16 +16,19 @@ void Add_player_stats(Display * d, Player * p){
     char * buff = malloc(sizeof(char)*50);
     strcpy(buff, s.name);
 
-
     char num[10];
-    sprintf(num, "%d", s.value);
 
+    if(s.value != 0){
+      sprintf(num, "%d", s.value);
+    }else{
+      memset(num, '\0', sizeof(num));
+    }
     strcpy(&buff[strlen(s.name)], num);
     d->status_items[i] = buff;
   }
 }
 
-static void collision_over(Game * g, Entity * e){
+void Collision_over(Game * g, Entity * e){
   g->game_state = moving;
   e->collision_action = 0;
   Clear_collision(g->display);
@@ -36,20 +39,20 @@ void Move(Game * g, char c){
   Add_player_stats(g->display, g->player);
 
   switch(c){
-      case 'a':
-          g->player_x--;
-          break;
-      case 'd':
-          g->player_x++;
-          break;
-      case 'w':
-          g->player_y--;
-          break;
-      case 's':
-          g->player_y++;
-          break;
-      default:
-          break;
+    case 'a':
+      g->player_x--;
+      break;
+    case 'd':
+      g->player_x++;
+      break;
+    case 'w':
+      g->player_y--;
+      break;
+    case 's':
+      g->player_y++;
+      break;
+    default:
+      break;
   }
 }
 
@@ -73,19 +76,32 @@ void Fill_map(Game * g){
 int Update_game(Game * g){
   Act_Collision(g);
   Direct_input(g);
-
+  Add_player_stats(g->display, g->player);
   Fill_map(g);
   Update_display(g->display);
   refresh();
   return 1;
 }
 
+void clear_stats(Player * p){
+  for(int i = 0; i < MAX_STATUS_CNT; i++){
+    p->stats[i].name = "";
+    p->stats[i].value = 0;
+  }
+}
+
 Player * init_player(){
   Player * p = malloc(sizeof(Player));
+  clear_stats(p);
 
-  for(int i = 0; i < MAX_STATUS_CNT; i++){
-    p->stats[i].name = "STAT: ";
-  }
+  p->stats[health].value =  100;
+  p->stats[health].name =   "Health: ";
+
+  p->stats[atk].value =     30;
+  p->stats[atk].name =      "Attack Power: ";
+
+  p->stats[food].value =    10;
+  p->stats[food].name =     "Food: ";
   return p;
 }
 

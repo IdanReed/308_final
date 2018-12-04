@@ -10,5 +10,4 @@ typedef struct Ent_house{
   int atk;
 } Ent_house;
 
-
 #endif

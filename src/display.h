@@ -37,12 +37,16 @@ typedef struct{
   WINDOW * status;
   WINDOW * menu;
   WINDOW * headings;
+
+  /* log */
+  char * log[5];
 } Display;
 
 void Update_display(Display *);
 Display * Start_display();
 void Fill_menu(Display * d, char * options[], char * collision_message);
 void Clear_collision(Display * d);
+void Add_to_log(Display *, char *);
 
-
+void clear_log(Display *);
 #endif

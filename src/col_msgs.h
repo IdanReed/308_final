@@ -1,6 +1,7 @@
 #ifndef enc_msgs
 #define enc_msgs
 
+
 char *  messages[]= {
 "You find a stable. A group of rabid reindeer attack you",
 "You find a workshop. A hungry group of elves try to eat you",
@@ -12,8 +13,8 @@ char *  messages[]= {
 "You find a shed. A zombie burst out and trys to eat you!",
 "You find an out house and open the door. A naked crazy man attacks you!",
 "You find a school. Zombie children attack you",
- 
 
-}
+
+};
 
 #endif
